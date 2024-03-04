@@ -19,4 +19,24 @@ function getComputerChoice (){
     return choice;
 }
 
+function playRound (playerChoice, computerChoice){
+    playerChoice = playerChoice.toLowerCase();
+    let winMessage = `You win! ${playerChoice} beats ${computerChoice}`;
+    let loseMessage = `You lose! ${computerChoice} beats ${playerChoice}`;
 
+    if (playerChoice === computerChoice) return "Draw";
+    else if (playerChoice === "rock") {
+        if (computerChoice === "scissor") return winMessage;
+        else return loseMessage;
+    }
+
+    else if (playerChoice === "paper") {
+        if (computerChoice === "rock") return winMessage;
+        else return loseMessage;
+    }
+
+    else if (playerChoice === "scissors") {
+        if (computerChoice === "paper") return winMessage;
+        else return loseMessage;
+    }
+}

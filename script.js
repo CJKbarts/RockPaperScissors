@@ -1,3 +1,8 @@
+const playerScoreContainer = document.querySelector(".playerScoreContainer");
+let playerScore = 0;
+
+const computerScoreContainer = document.querySelector(".computerScoreContainer");
+let computerScore = 0;
 
 function getComputerChoice (){
     let choiceNum = Math.floor(Math.random() * 3);
@@ -19,59 +24,39 @@ function getComputerChoice (){
     return choice;
 }
 
-function playRound (playerChoice, computerChoice){
-    playerChoice = playerChoice.toLowerCase();
+function playRound (playerChoice){
+    if (isWinner(playerChoice)){
+        playerScoreContainer.textContent = `Player Score: ${++playerScore}`;
+    } else {
+        computerScoreContainer.textContent = `Computer Score: ${++computerScore}`
+    }
+}
+
+function isWinner(playerChoice){
+    let computerChoice = getComputerChoice();
 
     if (playerChoice === computerChoice) return "Draw";
     else if (playerChoice === "rock") {
         if (computerChoice === "scissors") return true;
-        else return false;
     }
 
     else if (playerChoice === "paper") {
         if (computerChoice === "rock") return true;
-        else return false;
     }
 
     else if (playerChoice === "scissors") {
         if (computerChoice === "paper") return true;
-        else return false;
-    }
-}
-
-function playGame (){
-    let playerScore = 0;
-    let computerScore = 0;
-
-    let playerChoice;
-    let computerChoice;
-    
-
-    for(let i = 0; i < 5; i++){
-        playerChoice = prompt("Rock, Paper, or Scissors: ");
-        computerChoice = getComputerChoice();
-        
-        let result = playRound(playerChoice, computerChoice);
-        let message = result? `You win! ${playerChoice} beats ${computerChoice}` : 
-            `You lose! ${computerChoice} beats ${playerChoice}`;
-
-        if (result === "Draw") {
-            i--;
-            console.log("Draw! Play again!")
-            continue;
-        }
-
-        if (result){
-            playerScore++;
-        }
-
-        else {
-            computerScore++;
-        }
-        console.log(message)
-
-        if (playerScore === 3 || computerScore === 3) break;
     }
 
-    console.log((playerScore > computerScore) ? "You win!": "You lose!")
+    return false;
 }
+
+const selectionbtns = document.querySelectorAll(".selection");
+
+selectionbtns.forEach(
+    (button) => {
+        button.addEventListener("click", () => {
+            let result = playRound(button.id);
+        })
+    }
+)

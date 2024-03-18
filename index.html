@@ -5,17 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="buttonContainer">
-        <button class="selection" id="rock">rock</button>
-        <button class="selection" id="paper">paper</button>
-        <button class="selection" id="scissors">scissors</button>
-    </div>
-
-    <div class="scoresContainer">
-        <div class="playerScoreContainer">Player Score: 0</div>
-        <div class="computerScoreContainer">Computer Score: 0</div>
-    </div>
+    <div class="header">Rock Paper Scissors</div>
+    <div class="content">
+        <div class="scoresContainer displayedInRound">
+            <div class="playerScoreContainer">
+                <div class="selection playerDisplayDiv"></div>
+                <div class="score">Player Score: 0</div>
+            </div>
+            <div class="computerScoreContainer">
+                <div class="selection computerDisplayDiv"></div>
+                <div class="score">Computer Score: 0</div>
+            </div>
+        </div>
+    
+        <div class="buttonContainer displayedInRound">
+            <button class="selection rock" id="rock"></button>
+            <button class="selection paper" id="paper"></button>
+            <button class="selection scissors" id="scissors"></button>
+        </div>
+    </div>    
 </body>
 </html>

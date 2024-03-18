@@ -1,8 +1,27 @@
-const playerScoreContainer = document.querySelector(".playerScoreContainer");
-let playerScore = 0;
+const playerScoreElm = document.querySelector(".playerScoreContainer .score");
+const playerDisplayDiv = document.querySelector(".playerDisplayDiv");
+let currentPlayerDisplay = null;
+let playerScoreValue = 0;
 
-const computerScoreContainer = document.querySelector(".computerScoreContainer");
+const computerScoreElm = document.querySelector(".computerScoreContainer .score");
+const computerDisplayDiv = document.querySelector(".computerDisplayDiv");
+let currentComputerDisplay = null;
 let computerScore = 0;
+
+const selectionButtons = document.querySelectorAll(".selection");
+const buttonContainer = document.querySelector(".buttonContainer");
+const content = document.querySelector(".content");
+const resultMessage = document.createElement("div");
+resultMessage.classList.add("resultContainer");
+
+selectionButtons.forEach(
+    (button) => {
+        button.addEventListener("click", () => {
+            let result = playRound(button.id);
+        })
+    }
+);
+
 
 function getComputerChoice (){
     let choiceNum = Math.floor(Math.random() * 3);
@@ -25,16 +44,26 @@ function getComputerChoice (){
 }
 
 function playRound (playerChoice){
-    if (isWinner(playerChoice)){
-        playerScoreContainer.textContent = `Player Score: ${++playerScore}`;
-    } else {
-        computerScoreContainer.textContent = `Computer Score: ${++computerScore}`
+    let computerChoice = getComputerChoice();
+    displayPlayerChoice(playerChoice);
+    displayComputerChoice(computerChoice);
+    let result = isWinner(playerChoice, computerChoice);
+
+    if (result === "Draw"){
+        resultMessage.textContent = "It's a tie!!";
     }
+    else if (result){
+        playerScoreElm.textContent = `Player Score: ${++playerScoreValue}`;
+        resultMessage.textContent = `You Won!! \n${playerChoice} beats ${computerChoice}`;
+    } else {
+        computerScoreElm.textContent = `Computer Score: ${++computerScore}`;
+        resultMessage.textContent = `You lost! \n${computerChoice} beats ${playerChoice}`;
+    }
+
+    content.insertBefore(resultMessage, buttonContainer);
 }
 
-function isWinner(playerChoice){
-    let computerChoice = getComputerChoice();
-
+function isWinner(playerChoice, computerChoice){
     if (playerChoice === computerChoice) return "Draw";
     else if (playerChoice === "rock") {
         if (computerChoice === "scissors") return true;
@@ -51,12 +80,31 @@ function isWinner(playerChoice){
     return false;
 }
 
-const selectionbtns = document.querySelectorAll(".selection");
+function capitalizeFirstLetter(string){
+    return (string[0].toUpperCase() + string.slice(1))
+}
 
-selectionbtns.forEach(
-    (button) => {
-        button.addEventListener("click", () => {
-            let result = playRound(button.id);
-        })
+function displayPlayerChoice(playerChoice){
+    if (currentPlayerDisplay === null){
+        playerDisplayDiv.classList.toggle(playerChoice);
     }
-)
+    else if (currentPlayerDisplay !== playerChoice){
+        playerDisplayDiv.classList.toggle(currentPlayerDisplay);
+        playerDisplayDiv.classList.toggle(playerChoice);
+    }
+
+    currentPlayerDisplay = playerChoice;
+}
+
+function displayComputerChoice(computerChoice){
+    if (currentComputerDisplay === null) {
+        computerDisplayDiv.classList.toggle(computerChoice);
+    }
+
+    else if (currentComputerDisplay !== computerChoice){
+        computerDisplayDiv.classList.toggle(currentComputerDisplay);
+        computerDisplayDiv.classList.toggle(computerChoice);
+    }
+
+    currentComputerDisplay = computerChoice;
+}

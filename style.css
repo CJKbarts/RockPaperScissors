@@ -9,6 +9,7 @@ body{
     background-color: #222831;
 }
 
+/* HEADER */
 .header{
     font-size: 60px;
     display: flex;
@@ -18,21 +19,18 @@ body{
     height: 100px;
 }
 
+
+/* CONTENT */
 .content, .scoresContainer{
     display: flex;
     flex-direction: column;
     width: 1100px;
     margin: 10px auto;
-    gap: 10px;
+    gap: 30px;
     flex-wrap: wrap;
 }
 
- .buttonContainer, .resultContainer{
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-}
-
+/* Score Board */
 .scoresContainer{
     flex-direction: row;
     justify-content: space-evenly;
@@ -45,10 +43,25 @@ body{
     align-items: center;
 }
 
-.score{
-    font-size: 20px;
+.text{
+    font-size: 30px;
 }
 
+/* Result Message */
+.buttonContainer, .resultMessage{
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.resultMessage{
+    background-color: #76ABAE;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+
+/* Selection Buttons */
 .buttonContainer{
     width: 1100px;
 }
@@ -67,7 +80,7 @@ button.selection {
     width: 330px;
     height: 330px;
 }
-.selection:hover{
+button.selection:hover{
     filter: brightness(1.15);
 }
 

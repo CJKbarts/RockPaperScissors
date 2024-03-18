@@ -1,19 +1,19 @@
-const playerScoreElm = document.querySelector(".playerScoreContainer .score");
+const playerScoreElm = document.querySelector(".playerScoreContainer .text");
+let playerScoreValue = 0;
 const playerDisplayDiv = document.querySelector(".playerDisplayDiv");
 let currentPlayerDisplay = null;
-let playerScoreValue = 0;
 
-const computerScoreElm = document.querySelector(".computerScoreContainer .score");
+const computerScoreElm = document.querySelector(".computerScoreContainer .text");
+let computerScore = 0;
 const computerDisplayDiv = document.querySelector(".computerDisplayDiv");
 let currentComputerDisplay = null;
-let computerScore = 0;
 
-const selectionButtons = document.querySelectorAll(".selection");
 const buttonContainer = document.querySelector(".buttonContainer");
 const content = document.querySelector(".content");
-const resultMessage = document.createElement("div");
-resultMessage.classList.add("resultContainer");
 
+const resultMessage = document.querySelector(".resultMessage");
+
+const selectionButtons = document.querySelectorAll(".selection");
 selectionButtons.forEach(
     (button) => {
         button.addEventListener("click", () => {
@@ -21,7 +21,6 @@ selectionButtons.forEach(
         })
     }
 );
-
 
 function getComputerChoice (){
     let choiceNum = Math.floor(Math.random() * 3);
@@ -45,9 +44,10 @@ function getComputerChoice (){
 
 function playRound (playerChoice){
     let computerChoice = getComputerChoice();
+    let result = isWinner(playerChoice, computerChoice);
+
     displayPlayerChoice(playerChoice);
     displayComputerChoice(computerChoice);
-    let result = isWinner(playerChoice, computerChoice);
 
     if (result === "Draw"){
         resultMessage.textContent = "It's a tie!!";
@@ -59,8 +59,6 @@ function playRound (playerChoice){
         computerScoreElm.textContent = `Computer Score: ${++computerScore}`;
         resultMessage.textContent = `You lost! \n${computerChoice} beats ${playerChoice}`;
     }
-
-    content.insertBefore(resultMessage, buttonContainer);
 }
 
 function isWinner(playerChoice, computerChoice){
@@ -78,10 +76,6 @@ function isWinner(playerChoice, computerChoice){
     }
 
     return false;
-}
-
-function capitalizeFirstLetter(string){
-    return (string[0].toUpperCase() + string.slice(1))
 }
 
 function displayPlayerChoice(playerChoice){

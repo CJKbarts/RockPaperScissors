@@ -128,7 +128,7 @@ function resetScoreboard(){
     playerScoreElm.textContent = "Player Score: 0";
     computerScore = 0;
     computerScoreElm.textContent = "Computer Score: 0";
-    resultMessage.textContent = "Make your Selection";
+    resultMessage.textContent = "Make your selection";
     displayPlayerChoice(null);
     displayComputerChoice(null);
 }

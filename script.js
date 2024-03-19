@@ -1,5 +1,5 @@
 const playerScoreElm = document.querySelector(".playerScoreContainer .text");
-let playerScoreValue = 0;
+let playerScore = 0;
 const playerDisplayDiv = document.querySelector(".playerDisplayDiv");
 let currentPlayerDisplay = null;
 
@@ -18,6 +18,9 @@ selectionButtons.forEach(
     (button) => {
         button.addEventListener("click", () => {
             let result = playRound(button.id);
+            if (playerScore === 3 || computerScore === 3){
+                displayEndGameOverlay(playerScore > computerScore);
+            }
         })
     }
 );
@@ -53,7 +56,7 @@ function playRound (playerChoice){
         resultMessage.textContent = "It's a tie!!";
     }
     else if (result){
-        playerScoreElm.textContent = `Player Score: ${++playerScoreValue}`;
+        playerScoreElm.textContent = `Player Score: ${++playerScore}`;
         resultMessage.textContent = `You Won!! \n${playerChoice} beats ${computerChoice}`;
     } else {
         computerScoreElm.textContent = `Computer Score: ${++computerScore}`;
@@ -101,4 +104,31 @@ function displayComputerChoice(computerChoice){
     }
 
     currentComputerDisplay = computerChoice;
+}
+
+
+const overlay = document.querySelector("#overlay");
+const overlayMessage = document.querySelector("#overlay .text");
+function displayEndGameOverlay(playerWon){
+    overlay.style.display = "flex";
+    if (playerWon) overlayMessage.textContent = "YOU WON!!";
+    else overlayMessage.textContent = "YOU LOST!!";
+}
+
+const restartButton = document.querySelector(".restartButton");
+restartButton.addEventListener("click", restartGame);
+
+function restartGame(){
+    overlay.style.display = "none";
+    resetScoreboard();
+}
+
+function resetScoreboard(){
+    playerScore = 0;
+    playerScoreElm.textContent = "Player Score: 0";
+    computerScore = 0;
+    computerScoreElm.textContent = "Computer Score: 0";
+    resultMessage.textContent = "Make your Selection";
+    displayPlayerChoice(null);
+    displayComputerChoice(null);
 }
